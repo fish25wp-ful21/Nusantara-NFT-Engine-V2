@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #00ffcc;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tab {
+            background-color: #2a2a2a;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #00ffcc;
+            border-radius: 5px;
+        }
+        .tab:hover {
+            background-color: #00ffcc;
+            color: black;
+        }
+        .content {
+            display: none;
+            border: 1px solid #00ffcc;
+            background-color: #2a2a2a;
+            padding: 20px;
+            width: 80%;
+        }
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>NFT Gallery Management</h1>
+    <div class="tabs">
+        <div class="tab" onclick="openTab('upload')">Upload NFT</div>
+        <div class="tab" onclick="openTab('gallery')">NFT Gallery</div>
+        <div class="tab" onclick="openTab('statistics')">Statistics</div>
+    </div>
+
+    <div id="upload" class="content">
+        <h2>Upload New NFT</h2>
+        <input type="file" id="fileUpload" accept="image/*">
+        <button onclick="uploadNFT()">Upload</button>
+    </div>
+
+    <div id="gallery" class="content">
+        <h2>NFT Gallery</h2>
+        <div id="nftGallery"></div>
+    </div>
+
+    <div id="statistics" class="content">
+        <h2>NFT Statistics</h2>
+        <div id="statisticsData"></div>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            let contents = document.querySelectorAll('.content');
+            contents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function uploadNFT() {
+            const fileInput = document.getElementById('fileUpload');
+            const file = fileInput.files[0];
+            if (file) {
+                // Simulate file upload and database call to Neon.tech
+                alert('Uploading: ' + file.name);
+                // Here we would typically add code to upload the file and update the database
+                fetch('https://api.neon.tech/nft/upload', {
+                    method: 'POST',
+                    body: file
+                }).then(response => {
+                    if (!response.ok) throw new Error('Upload failed');
+                    alert('File uploaded and database updated!');
+                    loadGallery();
+                });
+            }
+        }
+
+        function loadGallery() {
+            // Fetch NFT data from database
+            fetch('https://api.neon.tech/nft/gallery')
+                .then(response => response.json())
+                .then(data => {
+                    const gallery = document.getElementById('nftGallery');
+                    gallery.innerHTML = '';
+                    data.nfts.forEach(nft => {
+                        const img = document.createElement('img');
+                        img.src = nft.image;
+                        img.alt = nft.name;
+                        img.style.width = '150px';
+                        gallery.appendChild(img);
+                    });
+                });
+        }
+
+        function loadStatistics() {
+            fetch('https://api.neon.tech/nft/statistics')
+                .then(response => response.json())
+                .then(stats => {
+                    const statsDiv = document.getElementById('statisticsData');
+                    statsDiv.innerHTML = `<p>Total NFTs: ${stats.total}</p><p>Most Expensive NFT: ${stats.most_expensive}</p>`;
+                });
+        }
+
+        // Load gallery and statistics on page load
+        window.onload = function() {
+            openTab('gallery');
+            loadGallery();
+            loadStatistics();
+        };
+    </script>
+
+</body>
+</html>
