@@ -5,8 +5,13 @@ Selamat datang di **Nusantara-NFT-Engine-V2**, sebuah *dashboard* visual inovati
 ## 🚀 Deskripsi Proyek
 Proyek ini dikembangkan dengan pendekatan *mobile-first*, memungkinkan pengelolaan aset NFT secara efisien langsung dari perangkat seluler. Dengan mengintegrasikan teknologi modern dan *database* yang *scalable*, *engine* ini memfasilitasi visualisasi aset digital yang memadukan elemen tradisional dengan nuansa futuristik.
 
+## 🥧 Integrasi Ekosistem Pi Network
+Sebagai proyek yang mendukung ekonomi terdesentralisasi, engine ini sepenuhnya mendukung:
+* **PiBox Support:** Integrasi sebagai ekosistem penyimpanan dan interaksi aset dalam jaringan Pi.
+* **Pi Network Ecosystem:** Dirancang untuk kompatibilitas dengan dApps dan utilitas di dalam jaringan Pi.
+
 ## 💎 Dukungan Multi-Format NFT
-Engine ini dirancang secara universal untuk mendukung berbagai jenis aset digital, baik yang ada saat ini maupun standar di masa depan:
+Engine ini dirancang secara universal untuk mendukung berbagai jenis aset digital:
 * **Visual:** Gambar (JPG, PNG, GIF) & Digital Art High-Resolution.
 * **Audio:** Musik, Lagu, dan Podcast (MP3, WAV, OGG).
 * **Motion:** Video & Animasi (MP4, WebM).
@@ -14,6 +19,7 @@ Engine ini dirancang secara universal untuk mendukung berbagai jenis aset digita
 * **Future Assets:** Siap diadaptasi untuk standar NFT masa depan.
 
 ## 🛠️ Stack Teknologi
+* **Blockchain/Network:** Pi Network (PiBox Support)
 * **Version Control:** GitHub
 * **Database:** PostgreSQL (via Neon.tech)
 * **Visual Engine:** Custom Dashboard Interface
@@ -26,7 +32,7 @@ Engine ini dirancang secara universal untuk mendukung berbagai jenis aset digita
 * `/docs` : Dokumentasi teknis dan panduan penggunaan.
 
 ## ⚙️ Pengembangan
-Proyek ini dikembangkan secara aktif sebagai bagian dari ekosistem digital untuk mendukung komunitas dan inovasi aset berbasis Web3 di wilayah Blitar dan sekitarnya.
+Proyek ini dikembangkan secara aktif oleh **ICP2E BLITAR RAYA** untuk mendorong inovasi aset berbasis Web3 dan memperkuat ekosistem digital di wilayah Blitar serta jaringan global Pi Network.
 
 ---
 ### Kolaborasi Pengembangan:
