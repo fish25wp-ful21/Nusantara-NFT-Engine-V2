@@ -1,105 +1,173 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nusantara Engine V2 - Dashboard</title>
-    <style>
-        :root {
-            --neon-gold: #ffca28;
-            --cyber-blue: #00e5ff;
-            --batik-dark: #1a1a1a;
-        }
-        body {
-            background-color: var(--batik-dark);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            /* Pola Batik Sederhana di Background */
-            background-image: radial-gradient(var(--neon-gold) 0.5px, transparent 0.5px);
-            background-size: 30px 30px;
-        }
-        header {
-            border-bottom: 2px solid var(--neon-gold);
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 0 15px var(--neon-gold);
-        }
-        .container { padding: 20px; }
-        .nft-form {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid var(--cyber-blue);
-            max-width: 500px;
-            margin: auto;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #222;
-            border: 1px solid var(--neon-gold);
-            color: white;
-        }
-        button {
-            background: var(--neon-gold);
-            color: black;
-            border: none;
-            padding: 15px 20px;
-            width: 100%;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-        button:hover { background: var(--cyber-blue); }
-        .footer-info {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 12px;
-            color: #888;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Nusantara Engine V2 - Cyber Batik</title>
+  <style>
+    :root {
+      --gold: #FFD700;
+      --purple: #BF5FFF;
+      --bg: #0A0A0F;
+      --card: #12121E;
+      --border: rgba(255, 215, 0, 0.2);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      background: var(--bg); 
+      color: #e0e0e0; 
+      font-family: 'Courier New', monospace; 
+      padding-bottom: 80px;
+    }
+    .header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      background: rgba(15, 15, 26, 0.9);
+    }
+    .title-gold { color: var(--gold); font-weight: bold; letter-spacing: 2px; }
+    .page { padding: 15px; max-width: 500px; margin: auto; }
+    
+    /* Cyber Batik Card Style */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+      background-image: radial-gradient(circle, rgba(255,215,0,0.05) 1px, transparent 1px);
+      background-size: 25px 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    
+    .label { color: var(--gold); font-size: 12px; margin-bottom: 8px; display: block; font-weight: bold; }
+    .inp {
+      width: 100%;
+      background: #060608;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+    }
+    .btn-gold { background: linear-gradient(135deg, #B8860B, var(--gold)); color: #000; }
+    
+    /* Tabs */
+    .tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+    .tab { flex: 1; padding: 10px; background: #1a1a2e; color: #666; border: none; border-radius: 5px; cursor: pointer; }
+    .tab.on { background: var(--gold); color: #000; }
+    .tab-pane { display: none; }
+    .tab-pane.on { display: block; }
+
+    /* Bottom Nav */
+    .bot-nav {
+      position: fixed;
+      bottom: 0; width: 100%;
+      background: var(--card);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .nav-btn { background: none; border: none; color: #666; font-size: 10px; cursor: pointer; }
+    .nav-btn.on { color: var(--gold); }
+  </style>
 </head>
 <body>
 
-<header>
-    <h1>NUSANTARA ENGINE V2</h1>
-    <p style="color: var(--neon-gold);">Cyber-Batik Interface | Pi Network Ecosystem</p>
+<header class="header">
+  <div class="title-gold">⚡ NUSANTARA ENGINE V2</div>
+  <div style="font-size: 10px; color: var(--purple);">CYBER BATIK ECOSYSTEM</div>
 </header>
 
-<div class="container">
-    <div class="nft-form">
-        <h3>Minting Aset Mitologi</h3>
-        <input type="text" id="name" placeholder="Nama Aset (Contoh: Naga Basuki)">
-        <textarea id="desc" placeholder="Deskripsi (Max 140 karakter)"></textarea>
-        <input type="text" id="url" placeholder="URL Gambar (8K Octane Render)">
-        <button onclick="submitNFT()">Simpan ke Neon Database</button>
+<div class="page">
+  <div class="tabs">
+    <button class="tab on" id="tab-panel" onclick="setTab('panel')">PANEL</button>
+    <button class="tab" id="tab-gallery" onclick="setTab('gallery')">GALERI</button>
+  </div>
+
+  <div id="pane-panel" class="tab-pane on">
+    <div class="card">
+      <span class="label">◆ INPUT ASSET NFT</span>
+      <input id="f-name" class="inp" type="text" placeholder="Nama Karakter (Contoh: Naga Basuki)">
+      <textarea id="f-desc" class="inp" rows="3" placeholder="Deskripsi Lore..."></textarea>
+      <input id="f-url" class="inp" type="text" placeholder="URL Gambar NFT">
+      <button class="btn btn-gold" onclick="doSave()">💾 SIMPAN KE NEON.TECH</button>
     </div>
+  </div>
+
+  <div id="pane-gallery" class="tab-pane">
+    <div class="card">
+      <span class="label">◆ KOLEKSI TERDAFTAR</span>
+      <div id="list-assets" style="font-size: 12px;">Memuat data...</div>
+    </div>
+  </div>
 </div>
 
-<div class="footer-info">
-    <p>Developer: <b>Ful21</b> | Community: <b>ICP2E BLITAR RAYA</b></p>
-</div>
+<nav class="bot-nav">
+  <button class="nav-btn on" id="nav-panel" onclick="setTab('panel')">🎨<br>Panel</button>
+  <button class="nav-btn" id="nav-gallery" onclick="setTab('gallery')">🖼️<br>Galeri</button>
+</nav>
 
 <script>
-    async function submitNFT() {
-        const data = {
-            name: document.getElementById('name').value,
-            description: document.getElementById('desc').value,
-            image_url: document.getElementById('url').value
-        };
+  function setTab(name) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('on'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+    
+    document.getElementById('pane-' + name).classList.add('on');
+    document.getElementById('tab-' + name).classList.add('on');
+    document.getElementById('nav-' + name).classList.add('on');
+    
+    if(name === 'gallery') loadAssets();
+  }
 
-        const response = await fetch('/assets', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        });
+  async function doSave() {
+    const data = {
+      name: document.getElementById('f-name').value,
+      description: document.getElementById('f-desc').value,
+      image_url: document.getElementById('f-url').value
+    };
 
-        const result = await response.json();
-        alert(result.message);
+    try {
+      const resp = await fetch('/assets', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      const res = await resp.json();
+      alert(res.message);
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-desc').value = '';
+    } catch (e) {
+      alert("Error: Pastikan server main.py sudah aktif");
     }
-</script>
+  }
 
+  async function loadAssets() {
+    const list = document.getElementById('list-assets');
+    try {
+      const resp = await fetch('/assets');
+      const data = await resp.json();
+      list.innerHTML = data.map(a => `
+        <div style="border-bottom:1px solid #333; padding:10px 0;">
+          <b style="color:var(--gold);">${a.name}</b><br>${a.description}
+        </div>
+      `).join('');
+    } catch (e) {
+      list.innerHTML = "Gagal memuat data.";
+    }
+  }
+</script>
 </body>
 </html>
