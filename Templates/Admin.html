@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <title>Nusantara Engine V2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; padding: 15px; }
+        .card { background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        h2 { color: #38bdf8; text-align: center; }
+        label { display: block; margin-top: 10px; font-size: 14px; color: #94a3b8; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
+        button { background: #0ea5e9; color: white; padding: 14px; width: 100%; border: none; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #0284c7; }
+        .nft-item { border-bottom: 1px solid #334155; padding: 10px 0; }
+    </style>
+</head>
+<body>
+    <h2>Nusantara Engine V2</h2>
+    <p style="text-align: center; font-size: 12px;">Sistem Pengelola Aset Digital - ICP2E Blitar Raya</p>
+    
+    <div class="card">
+        <h3 style="margin-top:0;">Daftarkan Aset Baru</h3>
+        <form action="/add-nft" method="post">
+            <label>Nama Karya</label>
+            <input type="text" name="name" placeholder="Contoh: Keris Singosari" required>
+            
+            <label>Kategori Aset</label>
+            <select name="category">
+                <option value="2D NFT">2D NFT (Gambar)</option>
+                <option value="3D NFT">3D NFT (Model)</option>
+                <option value="Audio NFT">Audio (Musik/Gamelan)</option>
+            </select>
+            
+            <label>Filosofi/Lore</label>
+            <textarea name="lore" rows="3" placeholder="Ceritakan sejarah atau makna karya ini..."></textarea>
+            
+            <label>Alamat Wallet Kreator (Hak 80%)</label>
+            <input type="text" name="creator_wallet" placeholder="GDTXXX... (Wallet Pi)" required>
+            
+            <label>Royalti Penjualan Kembali (Max 5%)</label>
+            <input type="number" name="royalty" min="0" max="5" step="0.1" placeholder="Contoh: 5">
+            
+            <input type="hidden" name="dynamic_type" value="static">
+            <input type="hidden" name="trigger_value" value="0">
+            
+            <button type="submit">SIMPAN KE BLOCKCHAIN</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>Daftar Aset Terdaftar</h3>
+        <div id="nft-list">
+            {% for nft in nfts %}
+            <div class="nft-item">
+                <strong>{{ nft.name }}</strong> <small>({{ nft.category }})</small><br>
+                <span style="font-size: 11px; color: #38bdf8;">{{ nft.creator_wallet }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
