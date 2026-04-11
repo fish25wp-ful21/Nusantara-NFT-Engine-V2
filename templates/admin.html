@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - ICP2E</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #020617; color: #f8fafc; padding: 20px; }
+        .admin-card { background: #1e293b; padding: 25px; border-radius: 15px; border: 1px solid #334155; text-align: center; }
+        .stat-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
+        .stat-item { background: #0f172a; padding: 15px; border-radius: 10px; border: 1px solid #0ea5e9; }
+        .role-badge { display: inline-block; background: #0369a1; color: white; padding: 4px 10px; border-radius: 20px; font-size: 11px; margin: 5px; }
+        .divider { border-bottom: 1px solid #334155; margin: 20px 0; }
+        .footer-note { font-size: 12px; color: #94a3b8; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="admin-card">
+        <h2 style="color:#38bdf8; margin-bottom:5px;">Dashboard Otoritas ICP2E</h2>
+        <p style="font-size:14px; color:#94a3b8;">Pengawasan Keuangan & Metadata</p>
+        
+        <div class="divider"></div>
+
+        <div class="stat-grid">
+            <div class="stat-item">
+                <small>Total Aset Terdaftar</small>
+                <h1 style="margin:5px 0; color:#0ea5e9;">{{ total }}</h1>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>Akses Struktur Organisasi:</h3>
+        <div>
+            <span class="role-badge">Ketua: Full View</span>
+            <span class="role-badge">Wakil Ketua: Backup Approval</span>
+            <span class="role-badge">Sekretaris: System Admin</span>
+            <span class="role-badge">Bendahara: Finance/Wallet Control</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="footer-note">
+            <strong>Sistem Pembagian Otomatis (Bebas Riba):</strong><br>
+            80% Kreator | 15% Kas ICP2E | 5% Server Maintenance
+        </div>
+        
+        <br>
+        <a href="/" style="color: #38bdf8; text-decoration: none; font-size: 14px;">← Kembali ke Beranda</a>
+    </div>
+</body>
+</html>
