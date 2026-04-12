@@ -1,79 +1,53 @@
-import os
-from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-from pydantic import BaseModel
-from sqlalchemy import create_engine, Column, Integer, String, Text
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
+from sqlalchemy import Column, Integer, String, Text, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import uvicorn
 
-# --- KONFIGURASI LOKASI FOLDER ---
-# Karena main.py ada di dalam folder /src, kita perlu naik satu tingkat untuk cari folder /static
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_DIR = os.path.join(BASE_DIR, "static")
+# --- 1. KONFIGURASI DATABASE ---
+DATABASE_URL = "postgresql://neondb_owner:npg_3xiZ7HFVMBTU@ep-lucky-wind-a14nbbr2-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 
-# --- KONFIGURASI DATABASE NEON.TECH ---
-DATABASE_URL = "postgresql://neondb_owner:npg_3xiZ7HFVMBTU@ep-lucky-wind-a14nbbr2-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
-
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
-
-# --- MODEL TABEL ---
-class NFTAsset(Base):
-    __tablename__ = "nft_assets"
+class NusantaraNFT(Base):
+    _tablename_ = "nusantara_nfts"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100))
-    description = Column(Text)
-    image_url = Column(Text)
+    category = Column(String(50))
+    creator_wallet = Column(String(100))
 
+engine = create_engine("postgresql://neondb_owner:npg_3xiZ7HFVMBTU@ep-lucky-wind-a14nbbr2-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require")
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base.metadata.create_all(bind=engine)
 
-# --- APP SETUP ---
-app = FastAPI(title="Nusantara Engine V2")
+app = FastAPI()
+templates = Jinja2Templates(directory="templates")
 
-# Sambungkan folder static agar file CSS/JS/HTML bisa dibaca browser
-if os.path.exists(STATIC_DIR):
-    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-
-class AssetCreate(BaseModel):
-    name: str
-    description: str
-    image_url: str
-
-# --- ENDPOINTS ---
-
-@app.get("/")
-def serve_index():
-    # Mengarahkan halaman utama langsung ke file index.html di folder static
-    index_path = os.path.join(STATIC_DIR, "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
-    return {"error": "File index.html tidak ditemukan di folder static"}
-
-@app.get("/assets")
-def get_assets():
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
     db = SessionLocal()
-    assets = db.query(NFTAsset).all()
+    nfts = db.query(NusantaraNFT).all()
     db.close()
-    return assets
+    return templates.TemplateResponse("index.html", {"request": request, "nfts": nfts})
 
-@app.post("/assets")
-def create_asset(asset: AssetCreate):
+@app.post("/add-nft")
+async def add_nft(name: str = Form(...), category: str = Form(...), creator_wallet: str = Form(...)):
     db = SessionLocal()
-    new_asset = NFTAsset(
-        name=asset.name,
-        description=asset.description,
-        image_url=asset.image_url
-    )
-    db.add(new_asset)
-    db.commit()
-    db.refresh(new_asset)
+    try:
+        new_nft = NusantaraNFT(name=name, category=category, creator_wallet=creator_wallet)
+        db.add(new_nft)
+        db.commit()
+        return RedirectResponse(url="/", status_code=303)
+    finally:
+        db.close()
+
+@app.get("/admin-icp2e", response_class=HTMLResponse)
+async def admin_panel(request: Request):
+    db = SessionLocal()
+    count = db.query(NusantaraNFT).count()
     db.close()
-    return {"message": "Aset Berhasil Disimpan ke Neon.tech", "data": new_asset}
+    return templates.TemplateResponse("admin.html", {"request": request, "total": count})
 
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8080, reload=True)
-
-
+if _name_ == "_main_":
+    uvicorn.run(app, host="0.0.0.0", port=5000)
